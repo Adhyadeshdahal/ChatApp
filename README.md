@@ -35,7 +35,9 @@ cp .env.example .env
 ```
 
 ### 3. Copy .env.example to .env and fill in your values.
-
+```bash
+cp .env.example .env
+```
 
 Start the backend:
 
@@ -51,6 +53,9 @@ npm install
 ```
 
 ### 4. Copy .env.example to .env and fill in your values.
+```bash
+cp .env.example .env
+```
 
 Start the frontend:
 
