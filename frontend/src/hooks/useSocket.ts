@@ -2,13 +2,25 @@ import { useEffect, useRef, useState } from "react";
 import { io, Socket } from "socket.io-client";
 import { Message, Stats, SystemEvent } from "../types";
 
-export function useSocket(token: string | null) {
+export function useSocket(token: string | null, activeRecipientId: string | null, currentUserId?: string) {
   const socketRef = useRef<Socket | null>(null);
+  const activeRecipientRef = useRef<string | null>(activeRecipientId);
   const [messages, setMessages] = useState<Message[]>([]);
   const [events, setEvents] = useState<SystemEvent[]>([]);
   const [stats, setStats] = useState<Stats>({ totalMessages: 0, totalUsers: 0, onlineCount: 0 });
   const [connected, setConnected] = useState(false);
-  // console.log("token is", token);
+  useEffect(() => {
+    activeRecipientRef.current = activeRecipientId;
+  }, [activeRecipientId]);
+
+  const isActiveConversationMessage = (msg: Message) => {
+    const activeRecipient = activeRecipientRef.current;
+    if (!activeRecipient) return !msg.recipient;
+    return (
+      msg.recipient === activeRecipient ||
+      (msg.sender === activeRecipient && msg.recipient === currentUserId)
+    );
+  };
   
   useEffect(() => {
     if (!token) return;
@@ -21,7 +33,9 @@ export function useSocket(token: string | null) {
     socket.on("disconnect", () => setConnected(false));
 
     socket.on("message:new", (msg: Message) => {
-      setMessages((prev) => [...prev, msg]);
+      if (isActiveConversationMessage(msg)) {
+        setMessages((prev) => [...prev, msg]);
+      }
     });
 
     socket.on("user:join", ({ username, onlineCount }: { username: string; onlineCount: number }) => {
@@ -47,15 +61,17 @@ export function useSocket(token: string | null) {
 
     return () => { socket.disconnect(); };
 
-  }, [token]);
+  }, [token, currentUserId]);
 
-  const sendMessage = (content: string) => {
-    socketRef.current?.emit("message:send", content);
+  const sendMessage = (content: string, recipientId?: string | null) => {
+    socketRef.current?.emit("message:send", { content, recipientId: recipientId ?? null });
   };
 
-  const loadHistory = (msgs: Message[], initialStats: { totalMessages: number; totalUsers: number }) => {
+  const loadHistory = (msgs: Message[], initialStats?: { totalMessages: number; totalUsers: number }) => {
     setMessages(msgs);
-    setStats((prev) => ({ ...prev, ...initialStats }));
+    if (initialStats) {
+      setStats((prev) => ({ ...prev, ...initialStats }));
+    }
   };
 
   return { messages, events, stats, connected, sendMessage, loadHistory };

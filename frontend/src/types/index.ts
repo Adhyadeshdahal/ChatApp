@@ -1,4 +1,5 @@
 export interface User {
+  _id?: string;
   id: string;
   username: string;
   email: string;
@@ -9,6 +10,8 @@ export interface Message {
   _id: string;
   sender: string;
   senderName: string;
+  recipient?: string | null;
+  recipientName?: string | null;
   content: string;
   createdAt: string;
 }
