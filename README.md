@@ -34,15 +34,8 @@ npm install
 cp .env.example .env
 ```
 
-Edit `.env`:
+Copy .env.example to .env and fill in your values.
 
-```env
-PORT=5000
-MONGO_URI=mongodb://localhost:27017/chatapp
-JWT_SECRET=your_secret_key
-JWT_EXPIRES_IN=7d
-CLIENT_URL=http://localhost:5173
-```
 
 Start the backend:
 
@@ -57,11 +50,7 @@ cd frontend
 npm install
 ```
 
-Create `frontend/.env`:
-
-```env
-VITE_API_URL=http://localhost:5000
-```
+Copy .env.example to .env and fill in your values.
 
 Start the frontend:
 
