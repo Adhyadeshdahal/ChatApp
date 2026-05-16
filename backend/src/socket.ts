@@ -45,6 +45,19 @@ export function initSocket(io: Server): void {
       }
       io.emit("stats:online", { onlineCount: onlineUsers.size });
     });
+    socket.on("message:send", async (content: string) => {
+      console.log("received message", content);
+      try {
+        const msg = await Message.create({ sender: userId, senderName: username, content: content.trim() });
+        console.log("message saved", msg._id);
+        const totalMessages = await Message.countDocuments();
+        io.emit("message:new", { ... });
+        console.log("message:new emitted");
+      } catch (err) {
+        console.log("error saving message", err);
+        socket.emit("error", { message: "Failed to send message" });
+      }
+    });
     console.log("new connection", socket.id, socket.data.username);
     socket.onAny((event, ...args) => {
       console.log("event:", event, args);
