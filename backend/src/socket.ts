@@ -47,7 +47,7 @@ export function initSocket(io: Server): void {
     });
     console.log("new connection", socket.id, socket.data.username);
     socket.onAny((event, ...args) => {
-    console.log("event received:", event, args);
-                 }); 
+      console.log("event:", event, args);
+    });
   });
 }
