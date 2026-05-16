@@ -95,28 +95,6 @@ Open `http://localhost:5173`
 | stats:online | Server → Client | Online user count update |
 | stats:messages | Server → Client | Total message count update |
 
-## Deployment
-
-### MongoDB — Atlas
-
-1. Create a free cluster at [cloud.mongodb.com](https://cloud.mongodb.com)
-2. Network Access → Allow access from anywhere (`0.0.0.0/0`)
-3. Get the connection string and use it as `MONGO_URI`
-
-### Backend — Render
-
-1. New Web Service → connect GitHub repo
-2. Root directory: `backend`
-3. Build command: `npm install && npm run build`
-4. Start command: `npm start`
-5. Add environment variables: `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CLIENT_URL`
-
-### Frontend — Vercel
-
-1. Import GitHub repo
-2. Root directory: `frontend`
-3. Add environment variable: `VITE_API_URL=https://your-render-url.onrender.com`
-4. Deploy
 
 ## Environment Variables
 
