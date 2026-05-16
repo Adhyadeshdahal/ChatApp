@@ -1,0 +1,137 @@
+# Palm Mind Chat App
+
+A real-time chat application built with Node.js, Express, MongoDB, Socket.IO, React, and Tailwind CSS.
+
+## Live Demo
+
+[https://chatapp.adhyadeshdahal.com.np](https://chatapp.adhyadeshdahal.com.np)
+
+## Tech Stack
+
+**Backend** — Node.js, Express, MongoDB, Mongoose, Socket.IO, JWT, bcryptjs, TypeScript
+
+**Frontend** — React, TypeScript, Tailwind CSS, Socket.IO Client, Axios, Vite
+
+## Prerequisites
+
+- Node.js 18+
+- MongoDB (local or Atlas)
+
+## Local Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/Adhyadeshdahal/ChatApp.git
+cd ChatApp
+```
+
+### 2. Backend setup
+
+```bash
+cd backend
+npm install
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/chatapp
+JWT_SECRET=your_secret_key
+JWT_EXPIRES_IN=7d
+CLIENT_URL=http://localhost:5173
+```
+
+Start the backend:
+
+```bash
+npm run dev
+```
+
+### 3. Frontend setup
+
+```bash
+cd frontend
+npm install
+```
+
+Create `frontend/.env`:
+
+```env
+VITE_API_URL=http://localhost:5000
+```
+
+Start the frontend:
+
+```bash
+npm run dev
+```
+
+Open `http://localhost:5173`
+
+## API Endpoints
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | /api/auth/register | No | Register a new user |
+| POST | /api/auth/login | No | Login and get JWT |
+| GET | /api/auth/me | Yes | Get current user |
+| GET | /api/users | Yes | Get all users |
+| PATCH | /api/users/:id | Yes | Update own profile |
+| DELETE | /api/users/:id | Yes | Delete own account |
+| GET | /api/chat/history | Yes | Get last 100 messages |
+| GET | /api/chat/stats | Yes | Get total messages and users |
+
+## Socket Events
+
+| Event | Direction | Description |
+|-------|-----------|-------------|
+| message:send | Client → Server | Send a message |
+| message:new | Server → Client | New message broadcast |
+| user:join | Server → Client | User joined notification |
+| user:leave | Server → Client | User left notification |
+| stats:online | Server → Client | Online user count update |
+| stats:messages | Server → Client | Total message count update |
+
+## Deployment
+
+### MongoDB — Atlas
+
+1. Create a free cluster at [cloud.mongodb.com](https://cloud.mongodb.com)
+2. Network Access → Allow access from anywhere (`0.0.0.0/0`)
+3. Get the connection string and use it as `MONGO_URI`
+
+### Backend — Render
+
+1. New Web Service → connect GitHub repo
+2. Root directory: `backend`
+3. Build command: `npm install && npm run build`
+4. Start command: `npm start`
+5. Add environment variables: `MONGO_URI`, `JWT_SECRET`, `JWT_EXPIRES_IN`, `CLIENT_URL`
+
+### Frontend — Vercel
+
+1. Import GitHub repo
+2. Root directory: `frontend`
+3. Add environment variable: `VITE_API_URL=https://your-render-url.onrender.com`
+4. Deploy
+
+## Environment Variables
+
+### Backend
+
+| Variable | Description |
+|----------|-------------|
+| PORT | Server port (default 5000) |
+| MONGO_URI | MongoDB connection string |
+| JWT_SECRET | Secret key for JWT signing |
+| JWT_EXPIRES_IN | JWT expiry (e.g. 7d) |
+| CLIENT_URL | Frontend URL for CORS |
+
+### Frontend
+
+| Variable | Description |
+|----------|-------------|
+| VITE_API_URL | Backend URL |
