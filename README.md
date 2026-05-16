@@ -34,12 +34,7 @@ npm install
 cp .env.example .env
 ```
 
-### 3. Copy .env.example to .env and fill in your values.
-```bash
-cp .env.example .env
-```
-
-Start the backend:
+Fill in the values in `.env`, then start the backend:
 
 ```bash
 npm run dev
@@ -50,14 +45,10 @@ npm run dev
 ```bash
 cd frontend
 npm install
-```
-
-### 4. Copy .env.example to .env and fill in your values.
-```bash
 cp .env.example .env
 ```
 
-Start the frontend:
+Fill in the values in `.env`, then start the frontend:
 
 ```bash
 npm run dev
@@ -88,7 +79,6 @@ Open `http://localhost:5173`
 | user:leave | Server → Client | User left notification |
 | stats:online | Server → Client | Online user count update |
 | stats:messages | Server → Client | Total message count update |
-
 
 ## Environment Variables
 
