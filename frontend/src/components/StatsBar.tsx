@@ -12,6 +12,8 @@ export default function StatsBar({ stats, connected }: Props) {
         <span className={`w-1.5 h-1.5 rounded-full ${connected ? "bg-green-400" : "bg-red-400"}`} />
         {connected ? "Connected" : "Offline"}
       </span>
+      <span className="text-muted">|</span>
+      <span><span className="text-gray-700 font-medium">{stats.onlineCount}</span> online</span>
       <span className="text-gray-300">·</span>
       <span><span className="text-gray-700 font-medium">{stats.totalUsers}</span> total users</span>
       <span className="text-gray-300">·</span>
