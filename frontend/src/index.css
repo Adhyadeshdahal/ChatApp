@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3a3a55 transparent;
+}
+*::-webkit-scrollbar { width: 4px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: #3a3a55; border-radius: 2px; }
+
+body {
+  background: #eaeaed;
+  color: #03031e;
+  font-family: 'DM Sans', sans-serif;
+}
