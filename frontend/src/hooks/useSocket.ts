@@ -8,12 +8,13 @@ export function useSocket(token: string | null) {
   const [events, setEvents] = useState<SystemEvent[]>([]);
   const [stats, setStats] = useState<Stats>({ totalMessages: 0, totalUsers: 0, onlineCount: 0 });
   const [connected, setConnected] = useState(false);
-
+  // console.log("token is", token);
+  
   useEffect(() => {
     if (!token) return;
 
     // const socket = io("/", { auth: { token }, transports: ["websocket"] });
-    const socket = io("http://localhost:5000", { auth: { token }, transports: ["websocket"] });
+    const socket = io(import.meta.env.VITE_API_URL ||"http://localhost:5000", { auth: { token }, transports: ["websocket"] });
     socketRef.current = socket;
 
     socket.on("connect", () => setConnected(true));
@@ -41,7 +42,11 @@ export function useSocket(token: string | null) {
       setStats((prev) => ({ ...prev, totalMessages }));
     });
 
+    socket.on("connect_error", (err) => console.log("connect_error", err.message, err));
+
+
     return () => { socket.disconnect(); };
+
   }, [token]);
 
   const sendMessage = (content: string) => {

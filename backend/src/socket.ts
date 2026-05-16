@@ -5,6 +5,7 @@ import { Message } from "./models/Message";
 
 const onlineUsers = new Set<string>();
 
+
 export function initSocket(io: Server): void {
   io.use(async (socket, next) => {
     const token = socket.handshake.auth.token as string | undefined;
@@ -44,5 +45,9 @@ export function initSocket(io: Server): void {
       }
       io.emit("stats:online", { onlineCount: onlineUsers.size });
     });
+    console.log("new connection", socket.id, socket.data.username);
+    socket.onAny((event, ...args) => {
+    console.log("event received:", event, args);
+                 }); 
   });
 }
