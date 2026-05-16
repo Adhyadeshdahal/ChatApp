@@ -174,31 +174,32 @@ export default function ChatPage() {
             ))}
             <div ref={bottomRef} />
           </div>
-        </main>
-      </div>
 
-      <div className="border-t border-gray-200 bg-white px-4 py-3">
-        <div className="flex items-end gap-2">
-          <textarea
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={onKey}
-            placeholder={selectedUser ? `Message ${selectedUser.username}...` : "Type a message..."}
-            rows={1}
-            className="flex-1 resize-none bg-gray-100 rounded-2xl px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 transition max-h-32"
-          />
-          <button
-            onClick={submit}
-            disabled={!input.trim() || !connected}
-            className="w-10 h-10 flex items-center justify-center bg-blue-500 hover:bg-blue-600 disabled:opacity-40 rounded-full transition-colors flex-shrink-0"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="22" y1="2" x2="11" y2="13" />
-              <polygon points="22 2 15 22 11 13 2 9 22 2" />
-            </svg>
-          </button>
-        </div>
-        <p className="text-[11px] text-gray-400 mt-1.5 ml-1">Enter to send · Shift+Enter for new line</p>
+          <div className="border-t border-gray-200 bg-white px-4 py-3">
+            <div className="flex items-end gap-2">
+              <textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={onKey}
+                placeholder={selectedUser ? `Message ${selectedUser.username}...` : "Type a message..."}
+                rows={1}
+                className="flex-1 resize-none bg-gray-100 rounded-2xl px-4 py-2.5 text-gray-800 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-300 transition max-h-32"
+              />
+              <button
+                onClick={submit}
+                disabled={!input.trim() || !connected}
+                aria-label="Send message"
+                className="w-10 h-10 flex items-center justify-center bg-blue-500 hover:bg-blue-600 disabled:opacity-40 rounded-full transition-colors flex-shrink-0"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13" />
+                  <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg>
+              </button>
+            </div>
+            <p className="text-[11px] text-gray-400 mt-1.5 ml-1">Enter to send · Shift+Enter for new line</p>
+          </div>
+        </main>
       </div>
 
       {showSettings && <SettingsPanel onClose={() => setShowSettings(false)} />}

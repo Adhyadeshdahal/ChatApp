@@ -21,6 +21,25 @@ export function useSocket(token: string | null, activeRecipientId: string | null
       (msg.sender === activeRecipient && msg.recipient === currentUserId)
     );
   };
+
+  const notifyNewMessage = (msg: Message) => {
+    if (msg.sender === currentUserId || !("Notification" in window)) return;
+
+    const showNotification = () => {
+      new Notification(msg.senderName || "New message", {
+        body: msg.content,
+        tag: msg._id,
+      });
+    };
+
+    if (Notification.permission === "granted") {
+      showNotification();
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") showNotification();
+      });
+    }
+  };
   
   useEffect(() => {
     if (!token) return;
@@ -33,6 +52,7 @@ export function useSocket(token: string | null, activeRecipientId: string | null
     socket.on("disconnect", () => setConnected(false));
 
     socket.on("message:new", (msg: Message) => {
+      notifyNewMessage(msg);
       if (isActiveConversationMessage(msg)) {
         setMessages((prev) => [...prev, msg]);
       }
